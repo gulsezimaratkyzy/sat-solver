@@ -71,7 +71,7 @@ export function CompositionBar({
         {parts.map((p) => (
           <div
             key={p.label}
-            style={{ width: `${p.pct}%`, backgroundColor: `var(--color-${p.tone})` }}
+            style={{ width: `${p.pct}%`, backgroundColor: `var(--${p.tone})` }}
             className="h-full first:rounded-l-full last:rounded-r-full"
           />
         ))}
@@ -82,7 +82,7 @@ export function CompositionBar({
             <span key={p.label} className="inline-flex items-center gap-1.5">
               <span
                 className="size-1.5 rounded-full"
-                style={{ backgroundColor: `var(--color-${p.tone})` }}
+                style={{ backgroundColor: `var(--${p.tone})` }}
               />
               <span className="tnum">{p.pct}%</span> {p.label}
             </span>
