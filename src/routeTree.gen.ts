@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiRouteImport } from './routes/ai'
+import { Route as FullTestRouteImport } from './routes/full-test'
 import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const AiRoute = AiRouteImport.update({
   id: '/ai',
   path: '/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FullTestRoute = FullTestRouteImport.update({
+  id: '/full-test',
+  path: '/full-test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InsightsRoute = InsightsRouteImport.update({
@@ -50,6 +56,7 @@ const VocabularyRoute = VocabularyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/full-test': typeof FullTestRoute
   '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/full-test': typeof FullTestRoute
   '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/full-test': typeof FullTestRoute
   '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/ai' | '/insights' | '/practice' | '/profile' | '/vocabulary'
+    | '/'
+    | '/ai'
+    | '/full-test'
+    | '/insights'
+    | '/practice'
+    | '/profile'
+    | '/vocabulary'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ai' | '/insights' | '/practice' | '/profile' | '/vocabulary'
+  to:
+    | '/'
+    | '/ai'
+    | '/full-test'
+    | '/insights'
+    | '/practice'
+    | '/profile'
+    | '/vocabulary'
   id:
     | '__root__'
     | '/'
     | '/ai'
+    | '/full-test'
     | '/insights'
     | '/practice'
     | '/profile'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiRoute: typeof AiRoute
+  FullTestRoute: typeof FullTestRoute
   InsightsRoute: typeof InsightsRoute
   PracticeRoute: typeof PracticeRoute
   ProfileRoute: typeof ProfileRoute
@@ -111,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/ai'
       fullPath: '/ai'
       preLoaderRoute: typeof AiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/full-test': {
+      id: '/full-test'
+      path: '/full-test'
+      fullPath: '/full-test'
+      preLoaderRoute: typeof FullTestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/insights': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiRoute: AiRoute,
+  FullTestRoute: FullTestRoute,
   InsightsRoute: InsightsRoute,
   PracticeRoute: PracticeRoute,
   ProfileRoute: ProfileRoute,
