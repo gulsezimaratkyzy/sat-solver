@@ -121,7 +121,7 @@ export function CurveSparkline({ points, tone }: { points: number[]; tone: strin
 
 export function SkillRow({ skill, onClick }: { skill: Skill; onClick?: () => void }) {
   const urgent = skill.freshness < 35;
-  const tone = urgent ? "var(--color-warning)" : "var(--color-chart-2)";
+  const tone = urgent ? "var(--warning)" : "var(--chart-2)";
   return (
     <button
       type="button"

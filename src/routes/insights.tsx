@@ -112,7 +112,7 @@ function Forecast() {
         </p>
         <svg viewBox="0 0 300 110" className="w-full" role="img" aria-label="Interval history">
           <polygon
-            fill="var(--color-primary)"
+            fill="var(--primary)"
             opacity="0.16"
             points={[
               ...intervalHistory.map(
@@ -130,7 +130,7 @@ function Forecast() {
             <polyline
               key={k}
               fill="none"
-              stroke="var(--color-primary)"
+              stroke="var(--primary)"
               strokeWidth="var(--curve-width)"
               vectorEffect="non-scaling-stroke"
               points={intervalHistory
@@ -181,7 +181,7 @@ function Retention() {
               <div className="scale-[2.4] origin-left">
                 <CurveSparkline
                   points={skill.curve}
-                  tone={skill.freshness < 35 ? "var(--color-warning)" : "var(--color-chart-2)"}
+                  tone={skill.freshness < 35 ? "var(--warning)" : "var(--chart-2)"}
                 />
               </div>
               <p className="mt-8 text-[11px] text-muted-foreground">
@@ -206,11 +206,11 @@ function Calibration() {
           Confidence vs accuracy
         </p>
         <svg viewBox="0 0 220 220" className="w-full" role="img" aria-label="Calibration scatter">
-          <rect x="0" y="0" width="220" height="220" fill="var(--color-surface-2)" rx="8" />
+          <rect x="0" y="0" width="220" height="220" fill="var(--surface-2)" rx="8" />
           {[0, 55, 110, 165, 220].map((g) => (
             <g key={g}>
-              <line x1={g} y1="0" x2={g} y2="220" stroke="var(--color-border)" strokeWidth="1" />
-              <line x1="0" y1={g} x2="220" y2={g} stroke="var(--color-border)" strokeWidth="1" />
+              <line x1={g} y1="0" x2={g} y2="220" stroke="var(--border)" strokeWidth="1" />
+              <line x1="0" y1={g} x2="220" y2={g} stroke="var(--border)" strokeWidth="1" />
             </g>
           ))}
           <line
@@ -218,7 +218,7 @@ function Calibration() {
             y1="220"
             x2="220"
             y2="0"
-            stroke="var(--color-border-strong)"
+            stroke="var(--border-strong)"
             strokeDasharray="4 4"
             strokeWidth="1"
           />
@@ -233,10 +233,10 @@ function Calibration() {
                 r={5 + p.n / 20}
                 fill={
                   over
-                    ? "var(--color-destructive)"
+                    ? "var(--destructive)"
                     : under
-                      ? "var(--color-info)"
-                      : "var(--color-success)"
+                      ? "var(--info)"
+                      : "var(--success)"
                 }
                 opacity="0.85"
               />

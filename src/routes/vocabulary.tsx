@@ -83,7 +83,7 @@ function Vocabulary() {
                   </span>
                   <CurveSparkline
                     points={curve(word.freshness + 20)}
-                    tone={urgent ? "var(--color-warning)" : "var(--color-chart-2)"}
+                    tone={urgent ? "var(--warning)" : "var(--chart-2)"}
                   />
                 </div>
                 {flipped === word.w && (
