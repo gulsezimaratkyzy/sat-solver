@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CalendarDays, ChevronRight, Play } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
+import { QuestionDrawer } from "@/components/question-drawer";
 import { AiFab, Screen } from "@/components/ai-sheet";
 import {
   ChangelogItem,
@@ -37,9 +38,12 @@ function Home() {
     <>
       <Screen>
         <header className="flex items-center justify-between py-2">
-          <div>
+          <div className="flex items-center gap-1">
+            <QuestionDrawer />
+            <div>
             <h1 className="text-lg font-semibold tracking-tight">Hi, {profile.name}</h1>
             <p className="text-xs text-muted-foreground">Today · interleaved focus</p>
+            </div>
           </div>
           <span className="tnum inline-flex items-center gap-1.5 rounded-md border border-border bg-surface px-2 py-1 text-xs text-muted-foreground">
             <CalendarDays className="size-3.5" />
@@ -70,6 +74,7 @@ function Home() {
           </p>
           <Link
             to="/practice"
+            search={{ subject: "", topics: "", difficulty: "" }}
             className="mt-4 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
           >
             <Play className="size-4" />

@@ -201,7 +201,7 @@ export function ScoreInterval({
   return (
     <section className="panel grain-top p-4">
       <div className="flex items-center justify-between">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           Predicted score
         </p>
         <span
@@ -253,7 +253,7 @@ export function SectionLabel({
 }) {
   return (
     <div className="mb-2 mt-6 flex items-center justify-between">
-      <h2 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      <h2 className="text-sm font-semibold tracking-tight text-foreground">
         {children}
       </h2>
       {action}

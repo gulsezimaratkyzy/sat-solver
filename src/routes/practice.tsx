@@ -5,14 +5,20 @@ import {
   Check,
   Flag,
   Sparkles,
-  Timer,
   X,
 } from "lucide-react";
 import { CompositionBar, PriorityBadge } from "@/components/sat-ui";
+import { TimerPill } from "@/components/timer";
+import { DesmosPanel } from "@/components/desmos-panel";
 import { hypothesisChips, sessionComposition, sessionQuestions } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/practice")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    subject: (search['subject'] as string) ?? "",
+    topics: (search['topics'] as string) ?? "",
+    difficulty: (search['difficulty'] as string) ?? "",
+  }),
   head: () => ({
     meta: [
       { title: "Practice session — Sightline SAT" },
@@ -55,7 +61,6 @@ function Practice() {
   }, [running]);
 
   const left = Math.max(0, minutes * 60 - seconds);
-  const clock = `${String(Math.floor(left / 60)).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
 
   const submit = () => {
     if (choice === null) return;
@@ -97,17 +102,10 @@ function Practice() {
               Question {qi + 1} of {sessionQuestions.length}
             </p>
           )}
-          {running ? (
-            <span
-              className="tnum inline-flex min-h-8 items-center gap-1.5 rounded-md border border-border px-2 text-xs text-muted-foreground"
-              aria-label={`${Math.ceil(left / 60)} minutes remaining`}
-            >
-              <Timer className="size-3.5" />
-              {clock}
-            </span>
-          ) : (
-            <span className="size-11" />
-          )}
+          <div className="flex items-center gap-1">
+            {running && q.domain.startsWith("Math") && <DesmosPanel />}
+            {running ? <TimerPill seconds={left} low={left < 60} /> : <span className="size-11" />}
+          </div>
         </header>
 
         {stage === "pre" && (
@@ -195,7 +193,7 @@ function Pre({
       </section>
 
       <section className="panel mt-3 p-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           Duration
         </p>
         <div className="mt-3 grid grid-cols-4 gap-1.5">
@@ -542,7 +540,7 @@ function Review({
       )}
 
       <section className="panel mt-3 p-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           Correct answer
         </p>
         <p className="mt-1 text-sm font-medium">{answer}</p>
