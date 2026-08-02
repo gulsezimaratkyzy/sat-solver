@@ -45,7 +45,7 @@ function Practice() {
   const [correctCount, setCorrectCount] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const q = sessionQuestions[qi];
+  const q = sessionQuestions[qi]!;
   const running = stage === "question" || stage === "hypothesis" || stage === "review";
 
   useEffect(() => {
@@ -149,7 +149,7 @@ function Practice() {
             confidence={confidence}
             hypothesis={hypothesis}
             rationale={q.rationale}
-            answer={q.choices[q.correct]}
+            answer={q.choices[q.correct]!}
             onNext={next}
             last={qi + 1 === sessionQuestions.length}
           />
@@ -270,7 +270,7 @@ function Warmup({ onNext }: { onNext: () => void }) {
 
 function WorkedExample({ onDone }: { onDone: () => void }) {
   const [card, setCard] = useState(0);
-  const support = [100, 50, 0][card];
+  const support = [100, 50, 0][card]!;
 
   return (
     <div className="flex flex-1 flex-col">
