@@ -34,13 +34,104 @@ export type ChangelogEntry = {
 
 export const profile = {
   name: "Alex",
+  lastName: "Kim",
   initials: "AK",
+  email: "alex.kim@gmail.com",
+  role: "Student",
+  school: "Northgate High School",
+  graduationClass: "Class of 2028",
+  joinedDate: "Joined March 14, 2026",
+  plan: "free" as "free" | "pro",
   goalScore: 1450,
   examDate: "Nov 8, 2026",
   daysToExam: 98,
   currentInterval: [1240, 1310] as [number, number],
   previousInterval: [1190, 1340] as [number, number],
 };
+
+/* ---------- Question bank picker ---------- */
+export type Subject = "math" | "english";
+
+export const topicBank: Record<Subject, { id: string; label: string; count: number }[]> = {
+  math: [
+    { id: "algebra", label: "Linear equations", count: 148 },
+    { id: "quadratics", label: "Quadratics", count: 122 },
+    { id: "systems", label: "Systems of equations", count: 96 },
+    { id: "geometry", label: "Geometry & trig", count: 134 },
+    { id: "circles", label: "Circle theorems", count: 61 },
+    { id: "data", label: "Data analysis", count: 118 },
+    { id: "ratios", label: "Ratios & percentages", count: 87 },
+    { id: "functions", label: "Nonlinear functions", count: 104 },
+  ],
+  english: [
+    { id: "grammar", label: "Punctuation & commas", count: 142 },
+    { id: "sva", label: "Subject–verb agreement", count: 88 },
+    { id: "transitions", label: "Transitions", count: 76 },
+    { id: "inference", label: "Inference", count: 131 },
+    { id: "evidence", label: "Command of evidence", count: 119 },
+    { id: "vocab", label: "Words in context", count: 156 },
+    { id: "synthesis", label: "Rhetorical synthesis", count: 69 },
+    { id: "structure", label: "Text structure", count: 58 },
+  ],
+};
+
+export const difficulties = [
+  { id: "easy", label: "Easy", tone: "chart-2" },
+  { id: "medium", label: "Medium", tone: "chart-3" },
+  { id: "hard", label: "Hard", tone: "chart-4" },
+  { id: "adaptive", label: "Adaptive", tone: "chart-1" },
+] as const;
+
+/* ---------- Vocabulary ---------- */
+export type VocabWord = {
+  word: string;
+  definition: string;
+  difficulty: 1 | 2 | 3;
+  retention: number;
+  source: "sat" | "mine";
+};
+
+export const vocabWords: VocabWord[] = [
+  { word: "Laconic", definition: "using very few words", difficulty: 3, retention: 22, source: "sat" },
+  { word: "Equivocate", definition: "to speak ambiguously to conceal the truth", difficulty: 3, retention: 31, source: "sat" },
+  { word: "Ameliorate", definition: "to make something better", difficulty: 2, retention: 48, source: "sat" },
+  { word: "Prosaic", definition: "commonplace, unromantic", difficulty: 3, retention: 66, source: "sat" },
+  { word: "Obdurate", definition: "stubbornly refusing to change an opinion", difficulty: 3, retention: 81, source: "mine" },
+  { word: "Candid", definition: "truthful and straightforward", difficulty: 1, retention: 74, source: "sat" },
+  { word: "Diligent", definition: "showing careful and persistent effort", difficulty: 1, retention: 88, source: "sat" },
+  { word: "Ubiquitous", definition: "present everywhere at once", difficulty: 2, retention: 57, source: "sat" },
+  { word: "Pragmatic", definition: "dealing with things realistically", difficulty: 2, retention: 69, source: "sat" },
+  { word: "Ephemeral", definition: "lasting for a very short time", difficulty: 2, retention: 35, source: "mine" },
+  { word: "Alleviate", definition: "to make suffering less severe", difficulty: 1, retention: 79, source: "sat" },
+  { word: "Nuanced", definition: "characterized by subtle distinctions", difficulty: 2, retention: 62, source: "sat" },
+  { word: "Intransigent", definition: "unwilling to compromise", difficulty: 3, retention: 27, source: "sat" },
+  { word: "Substantiate", definition: "to support a claim with evidence", difficulty: 2, retention: 51, source: "sat" },
+  { word: "Innocuous", definition: "not harmful or offensive", difficulty: 2, retention: 44, source: "sat" },
+  { word: "Meticulous", definition: "showing great attention to detail", difficulty: 1, retention: 83, source: "sat" },
+  { word: "Perfunctory", definition: "done without real interest or care", difficulty: 3, retention: 29, source: "mine" },
+  { word: "Tenacious", definition: "holding firmly, persistent", difficulty: 1, retention: 71, source: "sat" },
+  { word: "Anomaly", definition: "something that deviates from the norm", difficulty: 1, retention: 90, source: "sat" },
+  { word: "Vindicate", definition: "to clear of blame or suspicion", difficulty: 2, retention: 39, source: "sat" },
+  { word: "Esoteric", definition: "understood by only a small group", difficulty: 3, retention: 33, source: "sat" },
+  { word: "Empirical", definition: "based on observation rather than theory", difficulty: 2, retention: 64, source: "sat" },
+  { word: "Reticent", definition: "reluctant to speak openly", difficulty: 3, retention: 41, source: "sat" },
+  { word: "Cogent", definition: "clear, logical and convincing", difficulty: 3, retention: 25, source: "mine" },
+  { word: "Discern", definition: "to perceive or recognize clearly", difficulty: 1, retention: 86, source: "sat" },
+  { word: "Placate", definition: "to calm someone's anger", difficulty: 2, retention: 55, source: "sat" },
+  { word: "Superfluous", definition: "more than is needed", difficulty: 2, retention: 47, source: "sat" },
+  { word: "Advocate", definition: "to publicly support a cause", difficulty: 1, retention: 92, source: "sat" },
+  { word: "Undermine", definition: "to weaken gradually", difficulty: 1, retention: 78, source: "sat" },
+  { word: "Zealous", definition: "showing great energy for a cause", difficulty: 2, retention: 59, source: "sat" },
+];
+
+/* ---------- Full-length test ---------- */
+export const fullTestModules = [
+  { id: "rw1", name: "Reading & Writing · Module 1", questions: 27, minutes: 32 },
+  { id: "rw2", name: "Reading & Writing · Module 2", questions: 27, minutes: 32 },
+  { id: "break", name: "Break", questions: 0, minutes: 10 },
+  { id: "m1", name: "Math · Module 1", questions: 22, minutes: 35 },
+  { id: "m2", name: "Math · Module 2", questions: 22, minutes: 35 },
+];
 
 export const issues: Issue[] = [
   {
