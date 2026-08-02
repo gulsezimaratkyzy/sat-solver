@@ -520,7 +520,7 @@ function Review({
       </div>
 
       <p className="tnum mt-2 text-xs text-muted-foreground">
-        You felt: {confidence === null ? "—" : confidenceLabels[confidence].toLowerCase()} · Reality:{" "}
+        You felt: {confidence === null ? "—" : confidenceLabels[confidence]!.toLowerCase()} · Reality:{" "}
         {correct ? "correct" : "error"}
       </p>
 
