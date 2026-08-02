@@ -193,7 +193,7 @@ function Pre({
       </section>
 
       <section className="panel mt-3 p-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           Duration
         </p>
         <div className="mt-3 grid grid-cols-4 gap-1.5">
@@ -540,7 +540,7 @@ function Review({
       )}
 
       <section className="panel mt-3 p-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-sm font-medium text-muted-foreground">
           Correct answer
         </p>
         <p className="mt-1 text-sm font-medium">{answer}</p>
