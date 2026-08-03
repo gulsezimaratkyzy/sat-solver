@@ -93,7 +93,7 @@ function Forecast() {
   return (
     <div className="mt-4 space-y-4">
       <section className="panel grain-top p-4">
-        <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="text-[13px] text-muted-foreground">
           Current interval
         </p>
         <p className="tnum mt-2 text-[40px] font-semibold leading-none tracking-tight">
@@ -107,7 +107,7 @@ function Forecast() {
       </section>
 
       <section className="panel p-4">
-        <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="mb-3 text-[13px] text-muted-foreground">
           Uncertainty over time
         </p>
         <svg viewBox="0 0 300 110" className="w-full" role="img" aria-label="Interval history">
@@ -202,7 +202,7 @@ function Calibration() {
   return (
     <div className="mt-4 space-y-4">
       <section className="panel p-4">
-        <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="mb-3 text-[13px] text-muted-foreground">
           Confidence vs accuracy
         </p>
         <svg viewBox="0 0 220 220" className="w-full" role="img" aria-label="Calibration scatter">
@@ -264,7 +264,7 @@ function Calibration() {
       </div>
 
       <section className="panel p-4">
-        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        <p className="mb-2 text-[13px] text-muted-foreground">
           Readouts
         </p>
         <ul className="space-y-2">
