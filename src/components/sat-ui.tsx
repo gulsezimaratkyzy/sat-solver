@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowDownRight, Check, CircleDot, RotateCcw, Unlock } from "lucide-react";
+import { ArrowDownRight, Check, CircleDot, RotateCcw, Unlock } from "lucide-react";
 import type { ChangelogEntry, Issue, Priority, Skill } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
