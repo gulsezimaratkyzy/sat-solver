@@ -12,7 +12,7 @@ export function AiFab({ context }: { context?: string }) {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Ask AI"
-        className="fixed bottom-24 right-4 z-40 flex size-11 items-center justify-center rounded-full border border-border bg-surface shadow-elevated transition-colors hover:bg-surface-2"
+        className="fixed bottom-28 right-5 z-40 flex size-11 items-center justify-center rounded-full border border-border bg-background shadow-elevated transition-colors hover:bg-surface-2"
       >
         <Sparkles className="size-[18px] text-primary" />
       </button>
