@@ -384,3 +384,286 @@ export const aiThread = [
     text: "The discriminant tells you where the parabola crosses zero. The vertex is the midpoint between those two roots — averaging them gives (-b+√D)/2a and (-b-√D)/2a → -b/2a. So the vertex formula is just the average of the roots, with the discriminant cancelling out.",
   },
 ];
+
+/* ---------- Untimed practice bank ---------- */
+export type PracticeDifficulty = "easy" | "medium" | "hard";
+
+export type PracticeQuestion = {
+  id: string;
+  subject: Subject;
+  topic: string;
+  difficulty: PracticeDifficulty;
+  prompt: string;
+  choices: string[];
+  correct: number;
+  explanation: string;
+};
+
+export const practiceBank: PracticeQuestion[] = [
+  {
+    id: "p1",
+    subject: "math",
+    topic: "algebra",
+    difficulty: "easy",
+    prompt: "If 4x − 7 = 21, what is the value of x?",
+    choices: ["3.5", "5", "7", "14"],
+    correct: 2,
+    explanation:
+      "Add 7 to both sides: 4x = 28. Divide by 4: x = 7. Always isolate the variable term before dividing.",
+  },
+  {
+    id: "p2",
+    subject: "math",
+    topic: "algebra",
+    difficulty: "medium",
+    prompt:
+      "A line passes through (2, 5) and (6, 13). What is the equation of the line in slope-intercept form?",
+    choices: ["y = 2x + 1", "y = 2x − 1", "y = 4x − 3", "y = 0.5x + 4"],
+    correct: 0,
+    explanation:
+      "Slope = (13 − 5) / (6 − 2) = 2. Substitute (2, 5): 5 = 2·2 + b → b = 1. So y = 2x + 1.",
+  },
+  {
+    id: "p3",
+    subject: "math",
+    topic: "quadratics",
+    difficulty: "medium",
+    prompt: "What are the solutions to x² + 5x − 14 = 0?",
+    choices: ["x = −7 or x = 2", "x = 7 or x = −2", "x = −7 or x = −2", "x = 14 or x = −1"],
+    correct: 0,
+    explanation:
+      "Find two numbers with product −14 and sum 5: 7 and −2. Factor: (x + 7)(x − 2) = 0, so x = −7 or x = 2.",
+  },
+  {
+    id: "p4",
+    subject: "math",
+    topic: "quadratics",
+    difficulty: "hard",
+    prompt:
+      "A ball's height is h(t) = −16t² + 48t + 4. After how many seconds does it reach its maximum height?",
+    choices: ["1.0 s", "1.5 s", "2.0 s", "3.0 s"],
+    correct: 1,
+    explanation:
+      "The vertex of a parabola is at t = −b / (2a) = −48 / (2 · −16) = 1.5 s. No factoring needed — recognising the vertex is the whole task.",
+  },
+  {
+    id: "p5",
+    subject: "math",
+    topic: "systems",
+    difficulty: "medium",
+    prompt: "If 3x + y = 11 and x − y = 1, what is x + y?",
+    choices: ["3", "5", "6", "8"],
+    correct: 1,
+    explanation:
+      "Add the equations: 4x = 12 → x = 3. Then y = x − 1 = 2. So x + y = 5.",
+  },
+  {
+    id: "p6",
+    subject: "math",
+    topic: "circles",
+    difficulty: "hard",
+    prompt: "An inscribed angle intercepts an arc of 110°. What is the measure of the angle?",
+    choices: ["37.5°", "55°", "70°", "110°"],
+    correct: 1,
+    explanation: "An inscribed angle is always half of its intercepted arc: 110 / 2 = 55°.",
+  },
+  {
+    id: "p7",
+    subject: "math",
+    topic: "ratios",
+    difficulty: "easy",
+    prompt: "A jacket costs $80 after a 20% discount. What was the original price?",
+    choices: ["$96", "$100", "$104", "$120"],
+    correct: 1,
+    explanation:
+      "$80 is 80% of the original: 0.8p = 80 → p = 100. Never add 20% back to the sale price — the percentage is taken from the original.",
+  },
+  {
+    id: "p8",
+    subject: "math",
+    topic: "data",
+    difficulty: "easy",
+    prompt: "The mean of 5 numbers is 12. Four of them are 8, 10, 14 and 16. What is the fifth?",
+    choices: ["10", "12", "14", "60"],
+    correct: 1,
+    explanation: "Total must be 5 · 12 = 60. The four given sum to 48, so the fifth is 12.",
+  },
+  {
+    id: "p9",
+    subject: "math",
+    topic: "geometry",
+    difficulty: "medium",
+    prompt: "A right triangle has legs 9 and 12. What is the length of the hypotenuse?",
+    choices: ["13", "15", "18", "21"],
+    correct: 1,
+    explanation: "9-12-15 is a 3-4-5 triangle scaled by 3: √(81 + 144) = √225 = 15.",
+  },
+  {
+    id: "p10",
+    subject: "math",
+    topic: "functions",
+    difficulty: "hard",
+    prompt: "If f(x) = 2x² − 3x, what is f(−2)?",
+    choices: ["2", "8", "14", "−14"],
+    correct: 2,
+    explanation:
+      "f(−2) = 2(−2)² − 3(−2) = 2·4 + 6 = 14. The square makes the first term positive; the double negative makes the second positive too.",
+  },
+  {
+    id: "p11",
+    subject: "english",
+    topic: "grammar",
+    difficulty: "medium",
+    prompt:
+      "The rover collected samples for weeks ___ the results surprised the entire team. Which choice is correct?",
+    choices: [", ", ", and", "; however", " which"],
+    correct: 1,
+    explanation:
+      "Two independent clauses need a coordinating conjunction after the comma. A bare comma creates a splice, and “; however” would need a comma after “however”.",
+  },
+  {
+    id: "p12",
+    subject: "english",
+    topic: "sva",
+    difficulty: "easy",
+    prompt: "The collection of rare manuscripts ___ kept in a climate-controlled vault.",
+    choices: ["are", "is", "were", "have been"],
+    correct: 1,
+    explanation:
+      "The subject is “collection”, not “manuscripts”. Prepositional phrases never change the number of the subject, so the verb is singular: “is”.",
+  },
+  {
+    id: "p13",
+    subject: "english",
+    topic: "sva",
+    difficulty: "hard",
+    prompt:
+      "Neither the coach nor the players ___ satisfied with the outcome of the final match.",
+    choices: ["was", "were", "has been", "is"],
+    correct: 1,
+    explanation:
+      "With “neither … nor”, the verb agrees with the nearer subject — “players” — so the plural “were” is correct.",
+  },
+  {
+    id: "p14",
+    subject: "english",
+    topic: "transitions",
+    difficulty: "medium",
+    prompt:
+      "The study used a small sample. ___, its conclusions should be treated as preliminary.",
+    choices: ["Similarly", "Therefore", "Nevertheless", "For example"],
+    correct: 1,
+    explanation:
+      "The second sentence is a consequence of the first, so a cause-effect transition is needed. “Therefore” fits; contrast and example words do not.",
+  },
+  {
+    id: "p15",
+    subject: "english",
+    topic: "inference",
+    difficulty: "hard",
+    prompt:
+      "A researcher notes that the fossil shows wear consistent with chewing tough plants, yet its jaw muscles were weak. This most strongly suggests that the animal ___",
+    choices: [
+      "hunted other animals",
+      "relied on food that required little bite force",
+      "processed tough plants slowly over long feeding periods",
+      "did not use its teeth at all",
+    ],
+    correct: 2,
+    explanation:
+      "The inference has to honour both facts: tough-plant wear (so it did eat them) and weak muscles (so not by force). Long, slow feeding reconciles the two; the other options discard one fact.",
+  },
+  {
+    id: "p16",
+    subject: "english",
+    topic: "evidence",
+    difficulty: "medium",
+    prompt:
+      "Which finding would most strongly support the claim that urban gardens lower neighbourhood temperatures?",
+    choices: [
+      "Residents report enjoying the gardens.",
+      "Blocks with gardens measured 2.1 °C cooler than blocks without.",
+      "Garden plots increased local property values.",
+      "More vegetables were harvested than expected.",
+    ],
+    correct: 1,
+    explanation:
+      "Evidence must match the claim's measurement. Only the temperature comparison speaks to temperature; the rest are about different outcomes.",
+  },
+  {
+    id: "p17",
+    subject: "english",
+    topic: "vocab",
+    difficulty: "easy",
+    prompt:
+      "As used in the sentence “Her account of the accident was candid”, “candid” most nearly means:",
+    choices: ["hesitant", "honest", "detailed", "polite"],
+    correct: 1,
+    explanation:
+      "“Candid” means truthful and straightforward. Words-in-context questions reward the plainest fit, not the most impressive synonym.",
+  },
+  {
+    id: "p18",
+    subject: "english",
+    topic: "synthesis",
+    difficulty: "hard",
+    prompt:
+      "The writer wants to emphasise that the two experiments produced conflicting results. Which choice best accomplishes this?",
+    choices: [
+      "Both experiments were carried out in 2019.",
+      "The first found a strong effect, while the second found none at all.",
+      "The experiments used similar equipment.",
+      "The results were published in separate journals.",
+    ],
+    correct: 1,
+    explanation:
+      "Rhetorical synthesis asks you to serve the stated goal. Only the second option puts the two outcomes side by side and shows the conflict.",
+  },
+  {
+    id: "p19",
+    subject: "english",
+    topic: "structure",
+    difficulty: "medium",
+    prompt: "The main purpose of a paragraph that opens with a counterargument is usually to:",
+    choices: [
+      "confuse the reader",
+      "set up a rebuttal that strengthens the writer's position",
+      "change the topic",
+      "summarise the passage",
+    ],
+    correct: 1,
+    explanation:
+      "Writers raise objections in order to answer them. Naming the counterargument first makes the rebuttal that follows more convincing.",
+  },
+  {
+    id: "p20",
+    subject: "english",
+    topic: "grammar",
+    difficulty: "hard",
+    prompt:
+      "Select the correctly punctuated option: “The exhibit features three artists ___ a sculptor, a painter and a printmaker.”",
+    choices: [", ", ": ", "; ", " and"],
+    correct: 1,
+    explanation:
+      "A complete sentence followed by a list takes a colon. A comma would be too weak, and a semicolon requires a second independent clause.",
+  },
+];
+
+export function getPracticeQuestions(
+  subject: Subject,
+  topics: string[],
+  difficulty: PracticeDifficulty | "all",
+) {
+  const byTopic = practiceBank.filter(
+    (q) => q.subject === subject && (topics.length === 0 || topics.includes(q.topic)),
+  );
+  const byDifficulty =
+    difficulty === "all" ? byTopic : byTopic.filter((q) => q.difficulty === difficulty);
+  return byDifficulty.length ? byDifficulty : byTopic.length ? byTopic : practiceBank.filter((q) => q.subject === subject);
+}
+
+export const difficultyTone: Record<PracticeDifficulty, string> = {
+  easy: "chart-2",
+  medium: "chart-3",
+  hard: "chart-4",
+};
