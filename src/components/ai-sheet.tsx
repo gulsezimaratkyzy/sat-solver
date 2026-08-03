@@ -75,7 +75,7 @@ export function Screen({
 }) {
   return (
     <div className="min-h-dvh bg-background">
-      <div className={cn("mx-auto w-full max-w-md px-4 pb-28 pt-3", className)}>{children}</div>
+      <div className={cn("mx-auto w-full max-w-md px-5 pb-36 pt-3", className)}>{children}</div>
     </div>
   );
 }
