@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowDownRight, Check, CircleDot, RotateCcw, Unlock } from "lucide-react";
+import { ArrowDownRight, Check, CircleDot, RotateCcw, Unlock } from "lucide-react";
 import type { ChangelogEntry, Issue, Priority, Skill } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
@@ -181,7 +181,7 @@ export function ChangelogItem({ entry }: { entry: ChangelogEntry }) {
   );
 }
 
-/* ---------- Score interval widget ---------- */
+/* ---------- Score interval readout ---------- */
 export function ScoreInterval({
   low,
   high,
@@ -199,50 +199,35 @@ export function ScoreInterval({
   const narrowed = high - low < prevHigh - prevLow;
 
   return (
-    <section className="panel grain-top p-4">
-      <div className="flex items-center justify-between">
-        <p className="text-sm font-medium text-muted-foreground">
-          Predicted score
-        </p>
-        <span
-          className={cn(
-            "tnum inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-medium",
-            narrowed
-              ? "border-success/35 bg-success/10 text-success"
-              : "border-warning/35 bg-warning/10 text-warning",
-          )}
-        >
-          {narrowed ? <ArrowDownRight className="size-3" /> : <AlertTriangle className="size-3" />}
-          {narrowed ? "narrowing" : "widening"}
-        </span>
-      </div>
-
-      <p className="tnum mt-2 text-[40px] font-semibold leading-none tracking-tight">
+    <section className="pt-7">
+      <p className="text-[13px] text-muted-foreground">Predicted score</p>
+      <p className="tnum mt-1 flex items-baseline gap-2 text-[52px] font-semibold leading-none tracking-tighter">
         {low}
-        <span className="mx-1.5 text-muted-foreground/50">–</span>
+        <span className="text-[28px] font-normal text-muted-foreground/50">–</span>
         {high}
       </p>
 
-      <div className="relative mt-4 h-1.5 w-full rounded-full bg-surface-2">
+      <div className="relative mt-5 h-[3px] w-full rounded-full bg-surface-2">
         <div
-          className="absolute h-full rounded-full bg-border-strong/60"
+          className="absolute h-full rounded-full bg-border-strong"
           style={{ left: `${pos(prevLow)}%`, width: `${pos(prevHigh) - pos(prevLow)}%` }}
         />
         <div
-          className="absolute h-full rounded-full bg-primary transition-all duration-700"
+          className="absolute h-full rounded-full bg-foreground transition-all duration-700"
           style={{ left: `${pos(low)}%`, width: `${pos(high) - pos(low)}%` }}
         />
       </div>
-      <div className="tnum mt-1.5 flex justify-between text-[11px] text-muted-foreground">
-        <span>400</span>
-        <span>
-          ±{Math.round((high - low) / 2)} pts · was ±{Math.round((prevHigh - prevLow) / 2)}
-        </span>
-        <span>1600</span>
-      </div>
+
+      <p className="tnum mt-2.5 text-[13px] text-muted-foreground">
+        <span style={{ color: narrowed ? "var(--chart-2)" : "var(--chart-3)" }}>
+          {narrowed ? "Narrowing" : "Widening"}
+        </span>{" "}
+        · ±{Math.round((high - low) / 2)} pts, was ±{Math.round((prevHigh - prevLow) / 2)}
+      </p>
     </section>
   );
 }
+
 
 export function SectionLabel({
   children,
