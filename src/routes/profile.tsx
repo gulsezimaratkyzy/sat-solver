@@ -17,9 +17,11 @@ import {
 } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
 import { Screen } from "@/components/ai-sheet";
+import { StatsSections } from "@/components/stats-sections";
 import { useTheme } from "@/components/theme-provider";
-import { profile } from "@/lib/mock-data";
+import { profile, profileStats } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
@@ -28,13 +30,14 @@ export const Route = createFileRoute("/profile")({
       {
         name: "description",
         content:
-          "Your account: email, student details, graduation class, goal score, plan and appearance settings.",
+          "Your account and full statistics: score forecast, retention map, calibration, changelog, plan and appearance settings.",
       },
       { property: "og:title", content: "Profile — Sightline SAT" },
       {
         property: "og:description",
-        content: "Account details, graduation class, plan and appearance settings.",
+        content: "Account details, statistics, forecast, retention and calibration analytics.",
       },
+
     ],
   }),
   component: Profile,
@@ -105,6 +108,22 @@ function Profile() {
         </section>
 
         <p className="tnum mt-4 text-xs text-muted-foreground">{profile.joinedDate}</p>
+
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5">
+          {profileStats.map((s) => (
+            <div key={s.label}>
+              <p className="tnum text-2xl font-semibold tracking-tight">{s.value}</p>
+              <p className="mt-0.5 text-xs" style={{ color: `var(--${s.tone})` }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <Head>Statistics</Head>
+        <StatsSections />
+
+
 
         <Head>Plan</Head>
         <div className="flex items-center gap-3 rounded-2xl border border-primary/35 bg-accent/40 p-4">

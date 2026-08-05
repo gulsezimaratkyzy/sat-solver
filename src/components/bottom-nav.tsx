@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { BarChart2, Home, Target, Type } from "lucide-react";
+import { Home, Target, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /** Plain outlined circle — the AI surface has no metaphor yet, so it gets none. */
@@ -7,7 +7,7 @@ function AiCircle({ active }: { active: boolean }) {
   return (
     <span
       className={cn(
-        "block size-[22px] rounded-full border-[1.75px] transition-colors",
+        "block size-[26px] rounded-full border-[1.75px] transition-colors",
         active ? "border-foreground bg-foreground/15" : "border-current",
       )}
     />
@@ -30,9 +30,8 @@ function Avatar({ active }: { active: boolean }) {
 const tabs = [
   { to: "/", label: "Home", icon: Home },
   { to: "/practice", label: "Practice", icon: Target },
-  { to: "/ai", label: "AI", render: AiCircle },
-  { to: "/insights", label: "Insights", icon: BarChart2 },
-  { to: "/vocabulary", label: "Vocabulary", icon: Type },
+  { to: "/ai", label: "AI chat", render: AiCircle },
+  { to: "/friends", label: "Friends", icon: Users },
   { to: "/profile", label: "Profile", render: Avatar },
 ] as const;
 
@@ -45,7 +44,7 @@ export function BottomNav() {
       className="fixed inset-x-0 bottom-0 z-40 pb-[max(env(safe-area-inset-bottom),0.75rem)]"
     >
       <div className="pointer-events-none mx-auto w-full max-w-md px-5">
-        <div className="pointer-events-auto flex items-center justify-between rounded-full border border-border bg-background/80 px-3 py-2 shadow-elevated backdrop-blur-xl">
+        <div className="pointer-events-auto flex items-center justify-between rounded-full border border-border bg-background/80 px-3.5 py-2 shadow-elevated backdrop-blur-xl">
           {tabs.map((t) => {
             const active = t.to === "/" ? path === "/" : path.startsWith(t.to);
             return (
@@ -55,7 +54,7 @@ export function BottomNav() {
                 aria-label={t.label}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex size-11 items-center justify-center rounded-full transition-colors",
+                  "flex size-12 items-center justify-center rounded-full transition-colors",
                   active ? "text-foreground" : "text-muted-foreground hover:text-foreground",
                 )}
               >

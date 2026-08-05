@@ -667,3 +667,93 @@ export const difficultyTone: Record<PracticeDifficulty, string> = {
   medium: "chart-3",
   hard: "chart-4",
 };
+
+export type Friend = {
+  id: string;
+  name: string;
+  initials: string;
+  school: string;
+  solvedToday: number;
+  streakDays: number;
+  accuracy: number;
+  interval: [number, number];
+  lastActive: string;
+  tone: string;
+};
+
+export const friends: Friend[] = [
+  {
+    id: "f1",
+    name: "Dana Yerlan",
+    initials: "DY",
+    school: "NIS Almaty",
+    solvedToday: 42,
+    streakDays: 12,
+    accuracy: 81,
+    interval: [1350, 1420],
+    lastActive: "12 min ago",
+    tone: "chart-2",
+  },
+  {
+    id: "f2",
+    name: "Miras Bek",
+    initials: "MB",
+    school: "Haileybury",
+    solvedToday: 28,
+    streakDays: 6,
+    accuracy: 74,
+    interval: [1240, 1330],
+    lastActive: "1 h ago",
+    tone: "chart-1",
+  },
+  {
+    id: "f3",
+    name: "Sofia Chen",
+    initials: "SC",
+    school: "QSI International",
+    solvedToday: 17,
+    streakDays: 21,
+    accuracy: 88,
+    interval: [1420, 1480],
+    lastActive: "just now",
+    tone: "chart-5",
+  },
+  {
+    id: "f4",
+    name: "Aruzhan T.",
+    initials: "AT",
+    school: "NIS Astana",
+    solvedToday: 9,
+    streakDays: 3,
+    accuracy: 69,
+    interval: [1150, 1250],
+    lastActive: "4 h ago",
+    tone: "chart-3",
+  },
+  {
+    id: "f5",
+    name: "Timur K.",
+    initials: "TK",
+    school: "Miras",
+    solvedToday: 0,
+    streakDays: 0,
+    accuracy: 63,
+    interval: [1080, 1190],
+    lastActive: "yesterday",
+    tone: "chart-4",
+  },
+];
+
+export const friendRequests = [
+  { id: "r1", name: "Alina Sarsen", initials: "AS", mutual: 3 },
+  { id: "r2", name: "Nurlan D.", initials: "ND", mutual: 1 },
+];
+
+export const myToday = { solvedToday: 24, streakDays: 8, accuracy: 77 };
+
+export const profileStats = [
+  { label: "Questions solved", value: "1,284", tone: "chart-1" },
+  { label: "Accuracy", value: "77%", tone: "chart-2" },
+  { label: "Hours practiced", value: "46.5", tone: "chart-5" },
+  { label: "Day streak", value: "8", tone: "chart-3" },
+];

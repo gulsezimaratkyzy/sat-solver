@@ -11,11 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiRouteImport } from './routes/ai'
+import { Route as FriendsRouteImport } from './routes/friends'
 import { Route as FullTestRouteImport } from './routes/full-test'
-import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as VocabularyRouteImport } from './routes/vocabulary'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,14 +26,14 @@ const AiRoute = AiRouteImport.update({
   path: '/ai',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FriendsRoute = FriendsRouteImport.update({
+  id: '/friends',
+  path: '/friends',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FullTestRoute = FullTestRouteImport.update({
   id: '/full-test',
   path: '/full-test',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InsightsRoute = InsightsRouteImport.update({
-  id: '/insights',
-  path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PracticeRoute = PracticeRouteImport.update({
@@ -47,78 +46,54 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VocabularyRoute = VocabularyRouteImport.update({
-  id: '/vocabulary',
-  path: '/vocabulary',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/friends': typeof FriendsRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/friends': typeof FriendsRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
+  '/friends': typeof FriendsRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/ai'
-    | '/full-test'
-    | '/insights'
-    | '/practice'
-    | '/profile'
-    | '/vocabulary'
+  fullPaths: '/' | '/ai' | '/friends' | '/full-test' | '/practice' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/ai'
-    | '/full-test'
-    | '/insights'
-    | '/practice'
-    | '/profile'
-    | '/vocabulary'
+  to: '/' | '/ai' | '/friends' | '/full-test' | '/practice' | '/profile'
   id:
     | '__root__'
     | '/'
     | '/ai'
+    | '/friends'
     | '/full-test'
-    | '/insights'
     | '/practice'
     | '/profile'
-    | '/vocabulary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiRoute: typeof AiRoute
+  FriendsRoute: typeof FriendsRoute
   FullTestRoute: typeof FullTestRoute
-  InsightsRoute: typeof InsightsRoute
   PracticeRoute: typeof PracticeRoute
   ProfileRoute: typeof ProfileRoute
-  VocabularyRoute: typeof VocabularyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,18 +112,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/friends': {
+      id: '/friends'
+      path: '/friends'
+      fullPath: '/friends'
+      preLoaderRoute: typeof FriendsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/full-test': {
       id: '/full-test'
       path: '/full-test'
       fullPath: '/full-test'
       preLoaderRoute: typeof FullTestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/insights': {
-      id: '/insights'
-      path: '/insights'
-      fullPath: '/insights'
-      preLoaderRoute: typeof InsightsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/practice': {
@@ -165,24 +140,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vocabulary': {
-      id: '/vocabulary'
-      path: '/vocabulary'
-      fullPath: '/vocabulary'
-      preLoaderRoute: typeof VocabularyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiRoute: AiRoute,
+  FriendsRoute: FriendsRoute,
   FullTestRoute: FullTestRoute,
-  InsightsRoute: InsightsRoute,
   PracticeRoute: PracticeRoute,
   ProfileRoute: ProfileRoute,
-  VocabularyRoute: VocabularyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
