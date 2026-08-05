@@ -30,13 +30,14 @@ export const Route = createFileRoute("/profile")({
       {
         name: "description",
         content:
-          "Your account: email, student details, graduation class, goal score, plan and appearance settings.",
+          "Your account and full statistics: score forecast, retention map, calibration, changelog, plan and appearance settings.",
       },
       { property: "og:title", content: "Profile — Sightline SAT" },
       {
         property: "og:description",
-        content: "Account details, graduation class, plan and appearance settings.",
+        content: "Account details, statistics, forecast, retention and calibration analytics.",
       },
+
     ],
   }),
   component: Profile,
