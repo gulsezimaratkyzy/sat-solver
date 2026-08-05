@@ -108,6 +108,22 @@ function Profile() {
 
         <p className="tnum mt-4 text-xs text-muted-foreground">{profile.joinedDate}</p>
 
+        <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-5">
+          {profileStats.map((s) => (
+            <div key={s.label}>
+              <p className="tnum text-2xl font-semibold tracking-tight">{s.value}</p>
+              <p className="mt-0.5 text-xs" style={{ color: `var(--${s.tone})` }}>
+                {s.label}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <Head>Statistics</Head>
+        <StatsSections />
+
+
+
         <Head>Plan</Head>
         <div className="flex items-center gap-3 rounded-2xl border border-primary/35 bg-accent/40 p-4">
           <Sparkles className="size-5 text-primary" />
