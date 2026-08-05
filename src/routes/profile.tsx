@@ -17,9 +17,11 @@ import {
 } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
 import { Screen } from "@/components/ai-sheet";
+import { StatsSections } from "@/components/stats-sections";
 import { useTheme } from "@/components/theme-provider";
-import { profile } from "@/lib/mock-data";
+import { profile, profileStats } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/profile")({
   head: () => ({
