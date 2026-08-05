@@ -12,10 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiRouteImport } from './routes/ai'
 import { Route as FullTestRouteImport } from './routes/full-test'
-import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as ProfileRouteImport } from './routes/profile'
-import { Route as VocabularyRouteImport } from './routes/vocabulary'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -32,11 +30,6 @@ const FullTestRoute = FullTestRouteImport.update({
   path: '/full-test',
   getParentRoute: () => rootRouteImport,
 } as any)
-const InsightsRoute = InsightsRouteImport.update({
-  id: '/insights',
-  path: '/insights',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PracticeRoute = PracticeRouteImport.update({
   id: '/practice',
   path: '/practice',
@@ -47,78 +40,43 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VocabularyRoute = VocabularyRouteImport.update({
-  id: '/vocabulary',
-  path: '/vocabulary',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai': typeof AiRoute
   '/full-test': typeof FullTestRoute
-  '/insights': typeof InsightsRoute
   '/practice': typeof PracticeRoute
   '/profile': typeof ProfileRoute
-  '/vocabulary': typeof VocabularyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/ai'
-    | '/full-test'
-    | '/insights'
-    | '/practice'
-    | '/profile'
-    | '/vocabulary'
+  fullPaths: '/' | '/ai' | '/full-test' | '/practice' | '/profile'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/ai'
-    | '/full-test'
-    | '/insights'
-    | '/practice'
-    | '/profile'
-    | '/vocabulary'
-  id:
-    | '__root__'
-    | '/'
-    | '/ai'
-    | '/full-test'
-    | '/insights'
-    | '/practice'
-    | '/profile'
-    | '/vocabulary'
+  to: '/' | '/ai' | '/full-test' | '/practice' | '/profile'
+  id: '__root__' | '/' | '/ai' | '/full-test' | '/practice' | '/profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiRoute: typeof AiRoute
   FullTestRoute: typeof FullTestRoute
-  InsightsRoute: typeof InsightsRoute
   PracticeRoute: typeof PracticeRoute
   ProfileRoute: typeof ProfileRoute
-  VocabularyRoute: typeof VocabularyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -144,13 +102,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FullTestRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/insights': {
-      id: '/insights'
-      path: '/insights'
-      fullPath: '/insights'
-      preLoaderRoute: typeof InsightsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/practice': {
       id: '/practice'
       path: '/practice'
@@ -165,13 +116,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vocabulary': {
-      id: '/vocabulary'
-      path: '/vocabulary'
-      fullPath: '/vocabulary'
-      preLoaderRoute: typeof VocabularyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
@@ -179,10 +123,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiRoute: AiRoute,
   FullTestRoute: FullTestRoute,
-  InsightsRoute: InsightsRoute,
   PracticeRoute: PracticeRoute,
   ProfileRoute: ProfileRoute,
-  VocabularyRoute: VocabularyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
