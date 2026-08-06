@@ -228,27 +228,31 @@ function Practice() {
 
 function Runner({
   subject,
-  topics,
-  difficulty,
+  topics = [],
+  difficulty = "all",
+  list,
   onExit,
 }: {
-  subject: Subject;
-  topics: string[];
-  difficulty: PracticeDifficulty | "all";
+  subject?: Subject;
+  topics?: string[];
+  difficulty?: PracticeDifficulty | "all";
+  list?: PracticeQuestion[];
   onExit: () => void;
 }) {
   const questions = useMemo(
-    () => getPracticeQuestions(subject, topics, difficulty),
-    [subject, topics, difficulty],
+    () => list ?? (subject ? getPracticeQuestions(subject, topics, difficulty) : []),
+    [list, subject, topics, difficulty],
   );
   const [i, setI] = useState(0);
   const [choice, setChoice] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
   const [solved, setSolved] = useState(0);
+  const saved = useSavedQuestions();
 
-  const q = questions[i]!;
+  const q = questions[Math.min(i, questions.length - 1)]!;
   const tone = difficultyTone[q.difficulty];
   const correct = checked && choice === q.correct;
+  const isSaved = saved.ids.includes(q.id);
 
   const reset = () => {
     setChoice(null);
@@ -269,10 +273,22 @@ function Runner({
           <p className="tnum text-[13px] text-muted-foreground">
             {i + 1} / {questions.length} · {solved} solved
           </p>
-          <div className="flex w-11 justify-end">
-            {subject === "math" && <DesmosPanel />}
+          <div className="flex items-center justify-end gap-1">
+            <button
+              onClick={() => saved.toggle(q.id)}
+              aria-pressed={isSaved}
+              aria-label={isSaved ? "Remove from saved" : "Save this question"}
+              className={cn(
+                "flex size-11 items-center justify-center rounded-full transition-colors",
+                isSaved ? "text-chart-3" : "text-muted-foreground hover:bg-surface-2",
+              )}
+            >
+              <Bookmark className={cn("size-[18px]", isSaved && "fill-current")} />
+            </button>
+            {q.subject === "math" && <DesmosPanel />}
           </div>
         </header>
+
 
         <div className="mt-6 flex items-center gap-2.5 text-[13px]">
           <span className="font-medium capitalize" style={{ color: `var(--${tone})` }}>
