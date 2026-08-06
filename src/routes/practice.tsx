@@ -217,6 +217,9 @@ function Practice() {
             </button>
           </>
         )}
+          </>
+        )}
+
       </Screen>
       <BottomNav />
     </>
