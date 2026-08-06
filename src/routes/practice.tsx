@@ -405,3 +405,108 @@ function Runner({
     </div>
   );
 }
+
+function FullTestPanel() {
+  const totalQ = fullTestModules.reduce((n, m) => n + m.questions, 0);
+  const totalMin = fullTestModules.reduce((n, m) => n + m.minutes, 0);
+
+  return (
+    <section className="pt-7">
+      <h2 className="text-[19px] font-semibold tracking-tight">Full-length practice test</h2>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+        Four modules, real question counts and exact exam timing. Module 2 adapts to how you did in
+        module 1.
+      </p>
+
+      <p className="tnum mt-5 text-[13px]">
+        <span className="text-chart-1">{totalQ} questions</span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span className="text-chart-3">
+          {Math.floor(totalMin / 60)}h {totalMin % 60}m
+        </span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span className="text-chart-2">Desmos in Math</span>
+      </p>
+
+      <div className="mt-4 divide-y divide-border">
+        {fullTestModules.map((m) => (
+          <div key={m.id} className="flex items-center gap-3 py-3">
+            <span className="min-w-0 flex-1 text-[15px]">{m.name}</span>
+            <span className="tnum text-[13px] text-muted-foreground">
+              {m.questions ? `${m.questions}q · ` : ""}
+              {m.minutes}m
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <Link
+        to="/full-test"
+        className="mt-8 flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-[15px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+      >
+        Start full test <ArrowRight className="size-4" />
+      </Link>
+    </section>
+  );
+}
+
+function SavedPanel({ onReview }: { onReview: (list: PracticeQuestion[]) => void }) {
+  const { ids, remove } = useSavedQuestions();
+  const list = practiceBank.filter((q) => ids.includes(q.id));
+
+  return (
+    <section className="pt-7">
+      <h2 className="text-[19px] font-semibold tracking-tight">Saved questions</h2>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+        Tap the bookmark while solving to keep a question here, then come back and redo it.
+      </p>
+
+      {list.length === 0 ? (
+        <p className="pt-8 text-[15px] text-muted-foreground">
+          Nothing saved yet.
+        </p>
+      ) : (
+        <>
+          <button
+            onClick={() => onReview(list)}
+            className="mt-6 flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-[15px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            <span className="tnum">Review · {list.length} questions</span>
+            <ArrowRight className="size-4" />
+          </button>
+
+          <div className="mt-4 divide-y divide-border">
+            {list.map((q) => (
+              <div key={q.id} className="flex items-start gap-3 py-4">
+                <button
+                  onClick={() => onReview([q])}
+                  className="min-w-0 flex-1 text-left"
+                >
+                  <p className="flex items-center gap-2 text-[13px]">
+                    <span
+                      className="font-medium capitalize"
+                      style={{ color: `var(--${difficultyTone[q.difficulty]})` }}
+                    >
+                      {q.difficulty}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {topicBank[q.subject].find((t) => t.id === q.topic)?.label ?? q.topic}
+                    </span>
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-[15px] leading-snug">{q.prompt}</p>
+                </button>
+                <button
+                  onClick={() => remove(q.id)}
+                  aria-label="Remove from saved"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-2"
+                >
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
