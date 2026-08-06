@@ -49,11 +49,25 @@ const difficultyOptions: { id: PracticeDifficulty | "all"; label: string }[] = [
   { id: "hard", label: "Hard" },
 ];
 
+const modes = [
+  { id: "build", label: "Build a set" },
+  { id: "full", label: "Full test" },
+  { id: "saved", label: "Saved" },
+] as const;
+
+type Mode = (typeof modes)[number]["id"];
+
 function Practice() {
+  const [mode, setMode] = useState<Mode>("build");
   const [subject, setSubject] = useState<Subject | null>(null);
   const [topics, setTopics] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState<PracticeDifficulty | "all">("all");
   const [started, setStarted] = useState(false);
+  const [reviewList, setReviewList] = useState<PracticeQuestion[] | null>(null);
+
+  if (reviewList) {
+    return <Runner list={reviewList} onExit={() => setReviewList(null)} />;
+  }
 
   if (started && subject) {
     return (
@@ -76,6 +90,31 @@ function Practice() {
             away.
           </p>
         </header>
+
+        <div className="mt-5 flex gap-2">
+          {modes.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setMode(m.id)}
+              aria-pressed={mode === m.id}
+              className={cn(
+                "min-h-10 flex-1 rounded-full border px-3 text-[13px] font-medium transition-colors",
+                mode === m.id
+                  ? "border-foreground bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:bg-surface-2",
+              )}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
+
+        {mode === "full" && <FullTestPanel />}
+        {mode === "saved" && <SavedPanel onReview={setReviewList} />}
+
+        {mode === "build" && (
+          <>
+
 
         <section className="pt-7">
           <p className="text-[13px] text-muted-foreground">1 · Subject</p>
