@@ -1,17 +1,22 @@
 import { useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, ArrowRight, Bookmark, Check, RotateCcw, Trash2, X } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
 import { Screen } from "@/components/ai-sheet";
 import { DesmosPanel } from "@/components/desmos-panel";
+import { useSavedQuestions } from "@/lib/saved-questions";
 import {
   difficultyTone,
+  fullTestModules,
   getPracticeQuestions,
+  practiceBank,
   topicBank,
   type PracticeDifficulty,
+  type PracticeQuestion,
   type Subject,
 } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/practice")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -44,11 +49,25 @@ const difficultyOptions: { id: PracticeDifficulty | "all"; label: string }[] = [
   { id: "hard", label: "Hard" },
 ];
 
+const modes = [
+  { id: "build", label: "Build a set" },
+  { id: "full", label: "Full test" },
+  { id: "saved", label: "Saved" },
+] as const;
+
+type Mode = (typeof modes)[number]["id"];
+
 function Practice() {
+  const [mode, setMode] = useState<Mode>("build");
   const [subject, setSubject] = useState<Subject | null>(null);
   const [topics, setTopics] = useState<string[]>([]);
   const [difficulty, setDifficulty] = useState<PracticeDifficulty | "all">("all");
   const [started, setStarted] = useState(false);
+  const [reviewList, setReviewList] = useState<PracticeQuestion[] | null>(null);
+
+  if (reviewList) {
+    return <Runner list={reviewList} onExit={() => setReviewList(null)} />;
+  }
 
   if (started && subject) {
     return (
@@ -71,6 +90,31 @@ function Practice() {
             away.
           </p>
         </header>
+
+        <div className="mt-5 flex gap-2">
+          {modes.map((m) => (
+            <button
+              key={m.id}
+              onClick={() => setMode(m.id)}
+              aria-pressed={mode === m.id}
+              className={cn(
+                "min-h-10 flex-1 rounded-full border px-3 text-[13px] font-medium transition-colors",
+                mode === m.id
+                  ? "border-foreground bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:bg-surface-2",
+              )}
+            >
+              {m.label}
+            </button>
+          ))}
+        </div>
+
+        {mode === "full" && <FullTestPanel />}
+        {mode === "saved" && <SavedPanel onReview={setReviewList} />}
+
+        {mode === "build" && (
+          <>
+
 
         <section className="pt-7">
           <p className="text-[13px] text-muted-foreground">1 · Subject</p>
@@ -173,6 +217,9 @@ function Practice() {
             </button>
           </>
         )}
+          </>
+        )}
+
       </Screen>
       <BottomNav />
     </>
@@ -181,27 +228,31 @@ function Practice() {
 
 function Runner({
   subject,
-  topics,
-  difficulty,
+  topics = [],
+  difficulty = "all",
+  list,
   onExit,
 }: {
-  subject: Subject;
-  topics: string[];
-  difficulty: PracticeDifficulty | "all";
+  subject?: Subject;
+  topics?: string[];
+  difficulty?: PracticeDifficulty | "all";
+  list?: PracticeQuestion[];
   onExit: () => void;
 }) {
   const questions = useMemo(
-    () => getPracticeQuestions(subject, topics, difficulty),
-    [subject, topics, difficulty],
+    () => list ?? (subject ? getPracticeQuestions(subject, topics, difficulty) : []),
+    [list, subject, topics, difficulty],
   );
   const [i, setI] = useState(0);
   const [choice, setChoice] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
   const [solved, setSolved] = useState(0);
+  const saved = useSavedQuestions();
 
-  const q = questions[i]!;
+  const q = questions[Math.min(i, questions.length - 1)]!;
   const tone = difficultyTone[q.difficulty];
   const correct = checked && choice === q.correct;
+  const isSaved = saved.ids.includes(q.id);
 
   const reset = () => {
     setChoice(null);
@@ -222,17 +273,29 @@ function Runner({
           <p className="tnum text-[13px] text-muted-foreground">
             {i + 1} / {questions.length} · {solved} solved
           </p>
-          <div className="flex w-11 justify-end">
-            {subject === "math" && <DesmosPanel />}
+          <div className="flex items-center justify-end gap-1">
+            <button
+              onClick={() => saved.toggle(q.id)}
+              aria-pressed={isSaved}
+              aria-label={isSaved ? "Remove from saved" : "Save this question"}
+              className={cn(
+                "flex size-11 items-center justify-center rounded-full transition-colors",
+                isSaved ? "text-chart-3" : "text-muted-foreground hover:bg-surface-2",
+              )}
+            >
+              <Bookmark className={cn("size-[18px]", isSaved && "fill-current")} />
+            </button>
+            {q.subject === "math" && <DesmosPanel />}
           </div>
         </header>
+
 
         <div className="mt-6 flex items-center gap-2.5 text-[13px]">
           <span className="font-medium capitalize" style={{ color: `var(--${tone})` }}>
             {q.difficulty}
           </span>
           <span className="text-muted-foreground">
-            {topicBank[subject].find((t) => t.id === q.topic)?.label ?? q.topic}
+            {topicBank[q.subject].find((t) => t.id === q.topic)?.label ?? q.topic}
           </span>
         </div>
 
@@ -340,5 +403,110 @@ function Runner({
       </div>
       <BottomNav />
     </div>
+  );
+}
+
+function FullTestPanel() {
+  const totalQ = fullTestModules.reduce((n, m) => n + m.questions, 0);
+  const totalMin = fullTestModules.reduce((n, m) => n + m.minutes, 0);
+
+  return (
+    <section className="pt-7">
+      <h2 className="text-[19px] font-semibold tracking-tight">Full-length practice test</h2>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+        Four modules, real question counts and exact exam timing. Module 2 adapts to how you did in
+        module 1.
+      </p>
+
+      <p className="tnum mt-5 text-[13px]">
+        <span className="text-chart-1">{totalQ} questions</span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span className="text-chart-3">
+          {Math.floor(totalMin / 60)}h {totalMin % 60}m
+        </span>
+        <span className="mx-2 text-muted-foreground/50">·</span>
+        <span className="text-chart-2">Desmos in Math</span>
+      </p>
+
+      <div className="mt-4 divide-y divide-border">
+        {fullTestModules.map((m) => (
+          <div key={m.id} className="flex items-center gap-3 py-3">
+            <span className="min-w-0 flex-1 text-[15px]">{m.name}</span>
+            <span className="tnum text-[13px] text-muted-foreground">
+              {m.questions ? `${m.questions}q · ` : ""}
+              {m.minutes}m
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <Link
+        to="/full-test"
+        className="mt-8 flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-[15px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+      >
+        Start full test <ArrowRight className="size-4" />
+      </Link>
+    </section>
+  );
+}
+
+function SavedPanel({ onReview }: { onReview: (list: PracticeQuestion[]) => void }) {
+  const { ids, remove } = useSavedQuestions();
+  const list = practiceBank.filter((q) => ids.includes(q.id));
+
+  return (
+    <section className="pt-7">
+      <h2 className="text-[19px] font-semibold tracking-tight">Saved questions</h2>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-muted-foreground">
+        Tap the bookmark while solving to keep a question here, then come back and redo it.
+      </p>
+
+      {list.length === 0 ? (
+        <p className="pt-8 text-[15px] text-muted-foreground">
+          Nothing saved yet.
+        </p>
+      ) : (
+        <>
+          <button
+            onClick={() => onReview(list)}
+            className="mt-6 flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-[15px] font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            <span className="tnum">Review · {list.length} questions</span>
+            <ArrowRight className="size-4" />
+          </button>
+
+          <div className="mt-4 divide-y divide-border">
+            {list.map((q) => (
+              <div key={q.id} className="flex items-start gap-3 py-4">
+                <button
+                  onClick={() => onReview([q])}
+                  className="min-w-0 flex-1 text-left"
+                >
+                  <p className="flex items-center gap-2 text-[13px]">
+                    <span
+                      className="font-medium capitalize"
+                      style={{ color: `var(--${difficultyTone[q.difficulty]})` }}
+                    >
+                      {q.difficulty}
+                    </span>
+                    <span className="text-muted-foreground">
+                      {topicBank[q.subject].find((t) => t.id === q.topic)?.label ?? q.topic}
+                    </span>
+                  </p>
+                  <p className="mt-1 line-clamp-2 text-[15px] leading-snug">{q.prompt}</p>
+                </button>
+                <button
+                  onClick={() => remove(q.id)}
+                  aria-label="Remove from saved"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-2"
+                >
+                  <Trash2 className="size-4" />
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </section>
   );
 }
