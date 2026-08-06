@@ -1,17 +1,22 @@
 import { useMemo, useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, Check, RotateCcw, X } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowLeft, ArrowRight, Bookmark, Check, RotateCcw, Trash2, X } from "lucide-react";
 import { BottomNav } from "@/components/bottom-nav";
 import { Screen } from "@/components/ai-sheet";
 import { DesmosPanel } from "@/components/desmos-panel";
+import { useSavedQuestions } from "@/lib/saved-questions";
 import {
   difficultyTone,
+  fullTestModules,
   getPracticeQuestions,
+  practiceBank,
   topicBank,
   type PracticeDifficulty,
+  type PracticeQuestion,
   type Subject,
 } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/practice")({
   validateSearch: (search: Record<string, unknown>) => ({
