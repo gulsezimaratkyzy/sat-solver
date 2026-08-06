@@ -39,7 +39,7 @@ function Home() {
 
   return (
     <>
-      <div className="min-h-dvh bg-background">
+      <div className="flex h-dvh flex-col overflow-hidden bg-background">
         <div className="mx-auto w-full max-w-md px-5 pt-3">
           <div className="flex gap-5">
             {pages.map((p, i) => (
@@ -65,14 +65,14 @@ function Home() {
             const el = e.currentTarget;
             setPage(Math.round(el.scrollLeft / el.clientWidth));
           }}
-          className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex min-h-0 flex-1 snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
-          <section className="w-full shrink-0 snap-center">
+          <section className="h-full min-h-0 w-full shrink-0 snap-center overflow-y-auto">
             <div className="mx-auto w-full max-w-md px-5 pb-36">
               <TodayPage />
             </div>
           </section>
-          <section className="w-full shrink-0 snap-center">
+          <section className="h-full min-h-0 w-full shrink-0 snap-center overflow-y-auto">
             <div className="mx-auto w-full max-w-md px-5 pb-36">
               <VocabularyPanel />
             </div>
