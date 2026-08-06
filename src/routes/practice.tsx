@@ -295,7 +295,7 @@ function Runner({
             {q.difficulty}
           </span>
           <span className="text-muted-foreground">
-            {topicBank[subject].find((t) => t.id === q.topic)?.label ?? q.topic}
+            {topicBank[q.subject].find((t) => t.id === q.topic)?.label ?? q.topic}
           </span>
         </div>
 
